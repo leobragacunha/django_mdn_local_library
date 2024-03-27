@@ -1,0 +1,16 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+
+    <h1>Delete Copy</h1>
+
+    <p>Are you sure you want to delete <strong>{{ object.book.title }}</strong> from the records?</p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <input type="submit" value="Yes, delete.">
+        </table>
+    </form>
+
+{% endblock content %}

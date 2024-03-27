@@ -1,0 +1,28 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+    <h1>All borrowed books:</h1>
+    {% if perms.catalog.can_mark_returned %}
+        {% if bookinstance_list %}
+            
+                {% for bookinst in bookinstance_list %}
+                <hr>
+                <ul>
+                    <h4><a href="{% url 'book-detail' bookinst.book.pk %}">{{ bookinst.book.title }}</a></h4>
+                    <li>Borrowed by: {{ bookinst.borrower.first_name }} {{ bookinst.borrower.last_name }}</li>
+                    <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">Due back: {{ bookinst.due_back }}</li>
+                    <a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>
+                </ul>  
+                {% endfor %}
+                            
+        {% endif %}
+
+    {% else %}
+        <p>You can't access this page. Please consult a Librarian for more info.</p>
+    {% endif %}
+
+
+
+{% endblock content %}
+
+

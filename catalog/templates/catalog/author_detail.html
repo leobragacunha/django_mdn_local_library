@@ -1,0 +1,34 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block content %}
+
+    {% if author %}
+        <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+        <p><strong>Date of Birth: </strong> {{ author.date_of_birth }}</p>
+
+        {% if author.date_of_death %}
+            <p><strong>Date of Death: </strong>{{ author.date_of_death }}</p>
+        {% endif %}
+
+        <h4>Books: </h4>
+        {% for book in author.book_set.all %}
+            {% comment %} {% for book_instance in book.bookinstance_set.all %}
+                count = 0
+                count += 1
+            {% endfor %} {% endcomment %}
+        
+            <hr>
+            <p><strong>
+                <a href="{% url 'book-detail' book.pk %}">{{ book.title }}   <small>(ISBN: {{ book.isbn }})</small></a>
+            </strong></p>
+            <p><small>Cópias: {{book.bookinstance_set.count}}</small></p>
+            <p><strong>Summary:</strong></p>
+            <p>{{ book.summary }}</p>
+            <p><strong>Genre: </strong>{{ book.display_genre }}</p>
+            <p><strong>Language: </strong>{{ book.language }}</p>
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock content %}
+
